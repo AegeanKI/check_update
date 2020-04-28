@@ -95,7 +95,7 @@ def use_default_ssl_context():
 if __name__ == '__main__':
     use_default_ssl_context()
     books = [
-        Book('<BookName>', '<BookUrl>'),
+        Book('<BookName>', '<BookUrl'),
     ]
 
     has_update = False
@@ -112,14 +112,16 @@ if __name__ == '__main__':
             print("{}. {} {}未更{}".format(books.index(book)+1, book.name, TextColor.WARNING, TextColor.ENDC))
 
     time.sleep(1)
-    book_to_set_not_update = input("enter")
-    book_to_set_not_update = book_to_set_not_update.split(" ")
-    for book in book_to_set_not_update:
-        if book.isnumeric():
-            print("設定編號{} 的書為未更新".format(int(book)))
-            os.remove(books[int(book)-1].book_data)
-        else:
-            print("沒有編號為 {} 的書".format(book))
+    print("輸入設定要為未更新的書")
+    book_to_set_not_update = input()
+    if book_to_set_not_update != '':
+        book_to_set_not_update = book_to_set_not_update.split(' ')
+        for book in book_to_set_not_update:
+            if book.isnumeric():
+                print("設定編號{} 的書為未更新".format(int(book)))
+                os.remove(books[int(book)-1].book_data)
+            else:
+                print("沒有編號為 {} 的書".format(book))
 
     if has_update:
         driver.close_all_tab()
